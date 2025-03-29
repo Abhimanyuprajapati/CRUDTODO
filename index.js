@@ -44,8 +44,8 @@ app.use(session({
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
+app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
-app.set('views', path.join(__dirname, 'views')); // Ensure views are in the correct folder
 
 // Set up views directory (if you're using a view engine like EJS)
 app.set('views', path.join(__dirname, 'views'));
