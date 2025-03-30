@@ -181,7 +181,7 @@ app.get('/admin', async (req, res) => {
   try {
     // Check if the user is logged in (i.e., session contains user data)
     if (!req.session.user) {
-      return res.redirect('/login');  // Redirect to login page if not authenticated
+      return res.redirect('/');  // Redirect to login page if not authenticated
     }
 
     // Fetch all users and contact messages from the database
@@ -195,6 +195,18 @@ app.get('/admin', async (req, res) => {
     console.error(error);
     res.status(500).json({ message: error.message });
   }
+});
+
+app.get('/logout', (req, res) => {
+  // Destroy the session to log out the user
+  req.session.destroy((err) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).json({ message: "Logout failed" });
+    }
+    // Redirect to the login page after logout
+    res.redirect('/');
+  });
 });
 
 // Start the server
