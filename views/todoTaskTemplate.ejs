@@ -50,6 +50,54 @@
     .footer a:hover {
       text-decoration: underline;
     }
+
+    .task-input-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-width: 400px;
+    margin: auto;
+    padding: 15px;
+    background: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  .task-label {
+    font-size: 14px;
+    font-weight: bold;
+    color: #333;
+  }
+
+  textarea {
+    width: 100%;
+    padding: 10px;
+    border: 2px solid #ddd;
+    border-radius: 5px;
+    font-size: 14px;
+    resize: none;
+    transition: border-color 0.3s ease;
+  }
+
+  textarea:focus {
+    border-color: #0098CA;
+    outline: none;
+  }
+
+  button {
+    padding: 10px;
+    background-color: #0098CA;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background 0.3s ease;
+  }
+
+  button:hover {
+    background-color: #0077A3;
+  }
   </style>
 </head>
 <body>
@@ -60,21 +108,17 @@
 
     <div class="todo-list">
       <h2>Your To-Do List</h2>
-      <table>
-        <thead>
-          <tr>
-            <th>Task</th>
-            <th>Status</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>abhim</td>
-            <td>manish</td>
-            <td>pinky</td>
-          </tr>
-        </tbody>
-      </table>
+
+      <div class="task-input-container">
+        <label for="taskadd" class="task-label">New Task:</label>
+        <textarea id="taskadd" placeholder="Write your task here..." rows="2"></textarea>
+        <button id="addTaskButton">➕ Add Task</button>
+      </div>
+
+      <div>
+
+      </div>
+
     </div>
 
     <div class="footer">
