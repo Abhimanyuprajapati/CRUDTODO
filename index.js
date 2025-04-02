@@ -84,10 +84,6 @@ app.get('/contact', (req, res) => {
   res.sendFile(filePath);  // Sends the loginTemplate.html file to the client
 });
 
-// app.get('/admin', (req, res)=>{
-//   const filePath = path.join(__dirname, 'htmlTemplate', 'adminTemplate.html');
-//   res.sendFile(filePath)
-// })
 
 app.post('/forgot-password', async (req, res)=>{
   try{
@@ -151,7 +147,18 @@ app.post('/login', async (req, res) => {
     req.session.user = existingUser;  // Store user in session
     console.log("Session after login: ", req.session);
     // Redirect to the admin page
-    res.redirect('/admin');
+
+    const user = existingUser.toObject(); // Convert to plain object
+    console.log("Converted User Object:", user);
+    console.log("Admin Status:", user.admin, typeof user.admin);
+    
+
+     // Redirect based on admin status
+     if (user.admin) {
+      res.redirect('/admin');
+    } else {
+      res.redirect('/todo');
+    }
     
   } catch (error) {
     console.error(error);
@@ -196,6 +203,23 @@ app.get('/admin', async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 });
+
+app.get('/todo', async (req, res)=>{
+  console.log("req.session =====> ", req.session);
+  try {
+    // Check if the user is logged in (i.e., session contains user data)
+    if (!req.session.user) {
+      return res.redirect('/');  // Redirect to login page if not authenticated
+    }
+
+    // Render the todo page
+    res.render('todoTaskTemplate', { user: req.session.user });
+
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: error.message });
+  }
+})
 
 app.get('/logout', (req, res) => {
   // Destroy the session to log out the user
