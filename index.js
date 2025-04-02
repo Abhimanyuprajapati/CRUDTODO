@@ -155,11 +155,9 @@ app.post('/login', async (req, res) => {
 
      // Redirect based on admin status
      if (user.admin) {
-      res.redirect('/admin');
-    } else {
-      res.redirect('/todo');
-    }
-    
+      return res.redirect('/admin');
+    } 
+      return res.redirect('/todo');
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: error.message });
