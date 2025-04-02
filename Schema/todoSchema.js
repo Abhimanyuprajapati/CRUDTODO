@@ -2,19 +2,14 @@ import mongoose from 'mongoose';
 
 // Define a schema for the User
 const todoSchema = new mongoose.Schema({
-  email: {
+  addedtask: {
     type: String,
     required: true,
     unique: true,
   },
-  username: {
-    type: String,
-    required: true,
-    unique: true,
-  },
-  password: {
-    type: String,
-    required: true,
+  Date: { 
+    type: Date,
+    default: Date.now
   }
 });
 

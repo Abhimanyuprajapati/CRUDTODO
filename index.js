@@ -231,6 +231,10 @@ app.get('/logout', (req, res) => {
   });
 });
 
+app.get('/getTodo', async (req, res)=>{
+  
+})
+
 // Start the server
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);

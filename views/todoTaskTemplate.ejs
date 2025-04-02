@@ -16,11 +16,52 @@
       padding: 20px;
       border-radius: 8px;
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-      max-width: 100%;
+      max-width: 600px;
       margin: auto;
     }
     .todo-container h1 {
       color: #0098CA;
+    }
+    .task-input-container {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      padding: 15px;
+      background: #f9f9f9;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      margin-bottom: 20px;
+    }
+    .task-label {
+      font-size: 14px;
+      font-weight: bold;
+      color: #333;
+    }
+    textarea {
+      width: 100%;
+      padding: 10px;
+      border: 2px solid #ddd;
+      border-radius: 5px;
+      font-size: 14px;
+      resize: none;
+      transition: border-color 0.3s ease;
+    }
+    textarea:focus {
+      border-color: #0098CA;
+      outline: none;
+    }
+    button {
+      padding: 10px;
+      background-color: #0098CA;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 14px;
+      transition: background 0.3s ease;
+    }
+    button:hover {
+      background-color: #0077A3;
     }
     .todo-list {
       margin-top: 20px;
@@ -37,6 +78,16 @@
     .todo-list th {
       background-color: #f2f2f2;
     }
+    .task-actions {
+      display: flex;
+      gap: 5px;
+    }
+    .delete-btn {
+      background-color: red;
+    }
+    .delete-btn:hover {
+      background-color: darkred;
+    }
     .footer {
       text-align: center;
       margin-top: 20px;
@@ -50,54 +101,6 @@
     .footer a:hover {
       text-decoration: underline;
     }
-
-    .task-input-container {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    max-width: 400px;
-    margin: auto;
-    padding: 15px;
-    background: #f9f9f9;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  }
-
-  .task-label {
-    font-size: 14px;
-    font-weight: bold;
-    color: #333;
-  }
-
-  textarea {
-    width: 100%;
-    padding: 10px;
-    border: 2px solid #ddd;
-    border-radius: 5px;
-    font-size: 14px;
-    resize: none;
-    transition: border-color 0.3s ease;
-  }
-
-  textarea:focus {
-    border-color: #0098CA;
-    outline: none;
-  }
-
-  button {
-    padding: 10px;
-    background-color: #0098CA;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 14px;
-    transition: background 0.3s ease;
-  }
-
-  button:hover {
-    background-color: #0077A3;
-  }
   </style>
 </head>
 <body>
@@ -106,25 +109,65 @@
     <h1>Welcome to Your To-Do Dashboard</h1>
     <p>Manage your tasks efficiently. Add, update, and complete your to-dos.</p>
 
+    <div class="task-input-container">
+      <label for="taskadd" class="task-label">New Task:</label>
+      <textarea id="taskadd" name="taskadd" placeholder="Write your task here..." rows="2"></textarea>
+      <button id="addTaskButton">➕ Add Task</button>
+    </div>
+
     <div class="todo-list">
       <h2>Your To-Do List</h2>
 
-      <div class="task-input-container">
-        <label for="taskadd" class="task-label">New Task:</label>
-        <textarea id="taskadd" placeholder="Write your task here..." rows="2"></textarea>
-        <button id="addTaskButton">➕ Add Task</button>
-      </div>
-
-      <div>
-
-      </div>
-
+      <!-- Task List Table -->
+      <table>
+        <thead>
+          <tr>
+            <th>Task</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="taskTableBody">
+          <!-- Task items will be inserted here dynamically -->
+        </tbody>
+      </table>
     </div>
 
     <div class="footer">
       <p><a href="/logout">Logout</a></p>
     </div>
   </div>
+
+  <script>
+    document.getElementById("addTaskButton").addEventListener("click", function() {
+      const taskInput = document.getElementById("taskadd");
+      const taskText = taskInput.value.trim();
+      
+      if (taskText === "") {
+        alert("Please enter a task!");
+        return;
+      }
+
+      const taskTableBody = document.getElementById("taskTableBody");
+
+      // Create table row
+      const row = document.createElement("tr");
+      row.innerHTML = `
+        <td>${taskText}</td>
+        <td class="task-actions">
+          <button class="delete-btn" onclick="deleteTask(this)">❌ Delete</button>
+        </td>
+      `;
+
+      taskTableBody.appendChild(row);
+
+      // Clear input field
+      taskInput.value = "";
+    });
+
+    function deleteTask(button) {
+      button.parentElement.parentElement.remove();
+    }
+  </script>
 
 </body>
 </html>
